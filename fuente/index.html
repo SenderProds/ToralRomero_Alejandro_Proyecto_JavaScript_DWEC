@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda</title>
+    <link rel="stylesheet" href="estilo/principal.scss">
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><button id="btnIniciarSesion">Iniciar Sesion</button></li>
+                <li><button>Registrarse</button></li>
+                <li><button>Contacto</button></li>
+                <li><button>Carrito</button></li>
+                <li><button>Mapa</button></li>
+
+
+
+            </ul>
+        </nav>
+    </header>
+
+
+    <main>
+        <form id="inicioSesion" class="ocultar">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+
+            <input type="submit" value="Iniciar Sesion">
+        </form>
+
+
+        <form id="registro" class="ocultar">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre">
+
+            <label for="apellidos">Apellidos</label>
+            <input type="text" name="apellidos" id="apellidos">
+
+            <label for="telefono">Telefono</label>
+            <input type="number" name="telefono" id="telefono">
+
+            <label for="dni">DNI</label>
+            <input type="text" name="dni" id="dni">
+
+            <label for="edad">Edad</label>
+            <input type="edad" name="edad" id="edad">
+        </form>
+
+
+    </main>
+</body>
+</html>
