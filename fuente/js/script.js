@@ -7,6 +7,8 @@ let formRegistro = document.getElementById('registro');
 let desplegarCategorias = document.getElementById('desplegar');
 let btnCategorias = document.getElementById('btnCategorias');
 
+let btnCarritoHeader = document.getElementById('btnCarrito');
+
 let contenido = document.getElementById('contenido');
 let productosContenedor = document.getElementById('productos');
 
@@ -18,7 +20,7 @@ if (!localStorage.getItem('users')) {
     .then((json) => {
 
       localStorage.setItem("users", json);
-      
+
 
     });
 }
@@ -32,25 +34,25 @@ fetch('https://fakestoreapi.com/products/categories')
     json.forEach((categoria) => {
       let boton = document.createElement('button');
       boton.innerHTML = categoria;
-      
+
       desplegarCategorias.appendChild(boton);
     })
-   
+
 
   });
 
 
 
-  fetch('https://fakestoreapi.com/products')
-            .then(res=>res.json())
-            .then(json=>{
-              
-              generarListaProductos(json);
-            });
+fetch('https://fakestoreapi.com/products')
+  .then(res => res.json())
+  .then(json => {
+
+    generarListaProductos(json);
+  });
 
 
 
-function generarListaProductos(productos){
+function generarListaProductos(productos) {
   let ul = document.createElement('ul');
   productos.forEach((producto) => {
     let li = document.createElement('li');
@@ -63,18 +65,168 @@ function generarListaProductos(productos){
 
     img.src = producto.image;
     pNombre.textContent = producto.title;
+    pNombre.className = 'nombreProducto';
+
+
     pPrecio.textContent = producto.price;
+    pPrecio.className = 'precioProducto';
+
+
     btnCarrito.innerHTML = '<i class="bi bi-cart4"></i>';
-    btnFavorito.innerHTML = '<i class="bi bi-star"></i>';
-    btnMeGusta.innerHTML = '<i class="bi bi-heart"></i>';
+    btnCarrito.dataset.id = producto.id;
+    btnCarrito.className = 'carritoProducto';
+
+
+    (comprobarFavoritos(producto.id)) ? btnFavorito.innerHTML = '<i class="bi bi-star-fill"></i>' :
+      btnFavorito.innerHTML = '<i class="bi bi-star"></i>';
+    btnFavorito.dataset.id = producto.id;
+    btnFavorito.className = 'favoritoProducto';
+
+    btnMeGusta.innerHTML = '<i class="bi bi-heart"></i> <span>2</span>';
+    btnMeGusta.className = 'meGustaProducto';
     agregarHijos([img, pNombre, pPrecio, btnCarrito, btnFavorito, btnMeGusta], li);
     ul.appendChild(li);
   });
 
-  
+
 
   productosContenedor.appendChild(ul);
+
+  let botonesCarrito = document.querySelectorAll('.carritoProducto');
+
+  botonesCarrito.forEach((btnCarrito) => {
+    btnCarrito.addEventListener('click', (e) => {
+      btnCarritoHeader.classList.add('agregarCarrito');
+      agregarCarrito(e.target.parentNode.dataset.id);
+      console.log(e.target.parentNode.dataset.id);
+    });
+  });
+
+
+  let botonesFavorito = document.querySelectorAll('.favoritoProducto');
+
+  botonesFavorito.forEach((btnFav) => {
+    btnFav.addEventListener('click', (e) => {
+      e.target.classList.toggle('bi-star');
+      e.target.classList.toggle('bi-star-fill');
+      agregarFavorito(e.target.parentNode.dataset.id);
+      console.log(e.target);
+    });
+  });
+
+
+
+
 }
+
+
+/**
+ * Agrega un producto a favoritos
+ * @param {*} id Id del producto
+ */
+function agregarFavorito(id) {
+  if (obtenerFavoritos()) {
+
+    let arrayFavoritos = obtenerFavoritos();
+
+    if (comprobarFavoritos(id)) {
+      arrayFavoritos.splice(arrayFavoritos.indexOf(id), 1);
+    } else {
+      arrayFavoritos.push(id);
+    }
+    localStorage.setItem('favoritos', JSON.stringify(arrayFavoritos));
+  } else {
+    let arrayFavoritos = [];
+    arrayFavoritos.push(id);
+    localStorage.setItem('favoritos', JSON.stringify(arrayFavoritos));
+
+  }
+}
+
+
+/**
+ * Si favoritos esta en el almacenamiento devuelve un array con los favoritos
+ * @returns Array Favoritos
+ */
+function obtenerFavoritos() {
+  if (localStorage.getItem('favoritos')) {
+    return JSON.parse(localStorage.getItem('favoritos'));
+  } else {
+    return false;
+  }
+}
+
+
+/**
+ * Comprueba si el id del producto esta en favoritos
+ * @param {*} id Id del producto
+ * @returns Booleano
+ */
+function comprobarFavoritos(id) {
+  if (obtenerFavoritos()) {
+    let favoritos = obtenerFavoritos();
+    return favoritos.some((idFav) => {
+      return (idFav == id);
+    });
+
+  } else {
+    return false;
+  }
+}
+//Carrito
+
+/**
+ * Agrega un producto al carrito
+ * @param {*} id Id del producto
+ */
+function agregarCarrito(id) {
+  if (obtenerCarrito()) {
+    let carrito = obtenerCarrito();
+    let unidades = 1;
+
+    if (carrito[id]) {
+      unidades = carrito[id] + 1;
+    }
+    carrito[id] = unidades;
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+
+  } else {
+    let objCarrito = {};
+    objCarrito[id] = 1;
+    localStorage.setItem('carrito', JSON.stringify(objCarrito));
+  }
+
+
+}
+
+
+
+
+
+/**
+ * Obtiene el carrito
+ * @returns Array Carrito
+ */
+function obtenerCarrito() {
+  if (localStorage.getItem('carrito')) {
+    return JSON.parse(localStorage.getItem('carrito'));
+  } else {
+    return false;
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -83,7 +235,7 @@ function generarListaProductos(productos){
  * @param {*} param Array con cada uno de los hijos
  * @param {*} padre El padre al que se desea agregar los hijos
  */
-function agregarHijos([...hijos], padre){
+function agregarHijos([...hijos], padre) {
   hijos.forEach((hijo) => {
     padre.appendChild(hijo);
   });
@@ -117,7 +269,7 @@ btnCategorias.addEventListener('click', (e) => {
 btnRegistro.addEventListener("click", (e) => {
 
   ocultarContenido([formIniciarSesion, contenido]);
- 
+
   document.body.style.height = "100vh"; ////
   formRegistro.classList.remove("ocultar");
   formRegistro.classList.add("registro");
@@ -157,7 +309,7 @@ formRegistro.addEventListener('submit', (e) => {
 
 btnIniciarSesion.addEventListener("click", (e) => {
   document.body.style.height = "100vh"; ////
-  ocultarContenido([formRegistro]);
+  ocultarContenido([formRegistro, productosContenedor]);
   formIniciarSesion.classList.remove("ocultar");
   formIniciarSesion.classList.add("login");
 });
@@ -177,7 +329,7 @@ formIniciarSesion.addEventListener("submit", (e) => {
  * Lo elementos que esten visibles se ocultan
  * @param {*} param0 Elementos 
  */
-function ocultarContenido([...elementos]){
+function ocultarContenido([...elementos]) {
   elementos.forEach((elemento) => {
     if (!elemento.classList.contains('ocultar')) {
       elemento.classList.add('ocultar');

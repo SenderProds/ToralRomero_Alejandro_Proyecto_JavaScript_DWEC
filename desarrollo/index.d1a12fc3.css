@@ -6,6 +6,7 @@ body {
 }
 
 header nav ul {
+  z-index: 2;
   background-color: #0b1120;
   justify-content: center;
   align-items: center;
@@ -205,13 +206,100 @@ main {
 }
 
 #productos ul li {
+  cursor: pointer;
+  z-index: 0;
   justify-content: space-between;
+  align-items: center;
   width: 90%;
+  min-height: 100px;
+  margin-bottom: 15px;
   display: flex;
 }
 
 #productos ul li img {
-  height: 100px;
+  width: 120px;
+  max-height: 140px;
+}
+
+#productos ul li button {
+  cursor: pointer;
+  background-color: #0000;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  font-size: 20px;
+  display: flex;
+}
+
+#productos ul li button i {
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  display: flex;
+}
+
+#productos ul li button i:not(.bi-heart) {
+  padding: 20px;
+}
+
+#productos ul li .precioProducto {
+  width: 8%;
+}
+
+#productos ul li .nombreProducto {
+  width: 30%;
+}
+
+#productos ul li .meGustaProducto {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#productos ul li .meGustaProducto span {
+  padding: 0;
+  font-size: 14px;
+}
+
+#productos ul li .carritoProducto:hover {
+  background-color: #8adaff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px #026d9e67;
+}
+
+#productos ul li .favoritoProducto:hover {
+  background-color: #ffd814ad;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px #eeff0071;
+}
+
+#productos ul li .meGustaProducto:hover {
+  background-color: #e71d509d;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px #e7587c9d;
+}
+
+#productos ul li:hover {
+  background-color: #0ea4e933;
+  border-radius: 15px;
+  transition: all .2s cubic-bezier(.175, .885, .32, 1.275);
+  transform: scale(1.02);
+}
+
+.agregarCarrito {
+  background-color: green;
+  transition: all cubic-bezier(.075, .82, .165, 1);
+  animation-iteration-count: 1;
+}
+
+.bi-star-fill {
+  color: #ffd814ad;
+  text-shadow: 10px 0 10px 2px #0e0e0e;
 }
 
 /*# sourceMappingURL=index.d1a12fc3.css.map */
