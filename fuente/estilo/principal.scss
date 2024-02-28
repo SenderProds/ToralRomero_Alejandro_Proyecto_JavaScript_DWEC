@@ -1,13 +1,16 @@
-body{
+body {
     margin: 0;
     margin-top: 0;
-    height: 100vh;
+    height: 100%;
     width: 100%;
-    
+    font-family: "Roboto", sans-serif;
 
 }
 
-header nav ul{
+
+header nav ul {
+    position: fixed;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,31 +19,74 @@ header nav ul{
     margin: 0;
     gap: 15px;
 
-    li{
+    li {
         list-style: none;
+
+
     }
 
-    button{
+
+
+
+
+    button {
         background-color: #0ea5e9;
         border: none;
         padding: 10px;
         border-radius: 8px;
-        
+        font-family: "Roboto", sans-serif;
     }
 
-    button:hover{
+    button:hover {
         cursor: pointer;
         background-color: rgb(122, 193, 247);
         transform: scale(1.1);
         transition: ease-in-out .2s;
         box-shadow: 0px 0px 10px 2px rgba(90, 90, 249, 0.359);
     }
-    
+
 }
 
 
+#contenido {
+    margin-top: 60px;
+}
 
-main{
+#btnCategorias {
+
+    button {
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+}
+
+
+.desplegar {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    animation: desplegar .5s alternate;
+    overflow: hidden;
+    background-color: #0ea5e9;
+    border-radius: 15px;
+
+    button {
+        background-color: transparent;
+    }
+}
+
+@keyframes desplegar {
+    from {
+        height: 10px;
+    }
+
+    to {
+        height: 170px;
+    }
+}
+
+main {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,8 +95,9 @@ main{
 
 
 
-.login{
-    width: 15vw;
+.login {
+    margin-top: -9%;
+    width: 17vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,7 +111,7 @@ main{
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.155);
 
 
-    input{
+    input {
         text-align: center;
         width: 90%;
         height: 30px;
@@ -73,20 +120,128 @@ main{
         border: none;
         box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.204);
         color: black;
+        font-family: "Roboto", sans-serif;
     }
 
-    input:focus{
+    input:focus {
         box-shadow: 0px 0px 10px 2px rgba(46, 140, 255, 0.211);
-        
+
     }
 
-    input[type="submit"]{
+    input[type="submit"] {
         cursor: pointer;
-        background-color: #0ea5e9; 
+        background-color: #0ea5e9;
     }
 
 }
 
-.ocultar{
+
+.registro {
+    margin-top: -9%;
+    width: 17vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    box-sizing: content-box;
+    padding: 30px;
+    color: #0ea5e9;
+    gap: 10px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.155);
+
+    div:not(.incorrecto) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        z-index: 2;
+    }
+
+    input {
+        text-align: center;
+        width: 90%;
+        height: 30px;
+        border-radius: 10px;
+        outline: none;
+        border: none;
+        box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.204);
+        color: black;
+        font-family: "Roboto", sans-serif;
+        z-index: 1;
+    }
+
+    input:focus {
+        box-shadow: 0px 0px 10px 2px rgba(46, 140, 255, 0.211);
+
+    }
+
+    input[type="submit"] {
+        cursor: pointer;
+        background-color: #0ea5e9;
+    }
+
+}
+
+
+
+
+.ocultar {
     display: none;
+}
+
+
+.incorrecto {
+    position: absolute;
+    width: 17%;
+    color: red;
+    text-align: center;
+    border: 1px solid red;
+    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0.082);
+    top: 337px;
+    z-index: -1;
+    transition: ease-in-out;
+    animation: aparecer .2s normal;
+    padding: 4px;
+}
+
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        top: 200px;
+    }
+
+
+    to {
+        opacity: 100;
+    }
+}
+
+
+#productos {
+    width: 100%;
+    overflow: hidden;
+    overflow-y: visible;
+    ul {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        li {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+
+            img {
+                height: 100px;
+            }
+        }
+    }
+
 }
