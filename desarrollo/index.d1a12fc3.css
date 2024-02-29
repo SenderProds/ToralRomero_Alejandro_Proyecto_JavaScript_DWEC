@@ -39,7 +39,12 @@ header nav ul button:hover {
 }
 
 #contenido {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   margin-top: 60px;
+  display: flex;
 }
 
 #btnCategorias button {
@@ -197,11 +202,79 @@ main {
   overflow: hidden visible;
 }
 
+#productos table {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+
+#productos table thead {
+  width: 90%;
+}
+
+#productos table thead tr {
+  width: 100%;
+}
+
+#productos table thead tr th:first-child {
+  width: 15%;
+}
+
+#productos table thead tr th:nth-child(2) {
+  width: 40%;
+}
+
+#productos table thead tr th:nth-child(3) {
+  width: 5%;
+}
+
+#productos table thead tr th:nth-child(4) {
+  width: 40%;
+}
+
+#productos table tbody {
+  width: 90%;
+}
+
+#productos table tbody tr {
+  width: 100%;
+}
+
+#productos table tbody tr img {
+  width: 120px;
+  max-height: 140px;
+}
+
+#productos table tbody tr td button {
+  background-color: #0000;
+  border: none;
+}
+
+#productos table tbody tr td:first-child {
+  width: 15%;
+}
+
+#productos table tbody tr td:nth-child(2) {
+  width: 40%;
+}
+
+#productos table tbody tr td:nth-child(3) {
+  width: 5%;
+}
+
+#productos table tbody tr td:nth-child(4) {
+  width: 100%;
+  height: 100%;
+}
+
 #productos ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding-left: 0;
   display: flex;
 }
 
@@ -258,12 +331,44 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 22px;
   display: flex;
 }
 
+#productos ul li .meGustaProducto i {
+  z-index: 2;
+  margin-top: -13px;
+  padding: 10px;
+}
+
 #productos ul li .meGustaProducto span {
+  z-index: 1;
+  margin-top: 20px;
   padding: 0;
   font-size: 14px;
+  position: absolute;
+}
+
+#productos ul li .noMeGustaProducto {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  display: flex;
+}
+
+#productos ul li .noMeGustaProducto i {
+  z-index: 2;
+  margin-top: -18px;
+  padding: 10px;
+}
+
+#productos ul li .noMeGustaProducto span {
+  z-index: 1;
+  margin-top: 20px;
+  padding: 0;
+  font-size: 14px;
+  position: absolute;
 }
 
 #productos ul li .carritoProducto:hover {
@@ -284,6 +389,12 @@ main {
   box-shadow: 0 0 10px 2px #e7587c9d;
 }
 
+#productos ul li .noMeGustaProducto:hover {
+  background-color: #aea6a89d;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px #9e98999d;
+}
+
 #productos ul li:hover {
   background-color: #0ea4e933;
   border-radius: 15px;
@@ -299,7 +410,60 @@ main {
 
 .bi-star-fill {
   color: #ffd814ad;
-  text-shadow: 10px 0 10px 2px #0e0e0e;
+}
+
+.bi-heart-fill {
+  color: #ff0051;
+}
+
+#filtros {
+  justify-content: space-between;
+  width: 90%;
+  display: flex;
+}
+
+#filtros ul {
+  justify-content: center;
+  align-items: center;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+}
+
+#filtros ul li {
+  cursor: pointer;
+  background-color: #0ea5e9;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  font-size: 20px;
+  display: flex;
+}
+
+#filtros ul .seleccionado {
+  color: #fff;
+  background-color: #0b1120;
+}
+
+#filtros ul li:hover {
+  background-color: #95d7f6;
+  transform: scale(1.07);
+  box-shadow: 0 0 10px 2px #95d7f663;
+}
+
+#filtros ul li:hover i {
+  padding: 10px;
+  transform: scale(1.4);
+}
+
+.borde-radius-left {
+  border-radius: 12px 0 0 12px;
+}
+
+.borde-radius-right {
+  border-radius: 0 12px 12px 0;
 }
 
 /*# sourceMappingURL=index.d1a12fc3.css.map */

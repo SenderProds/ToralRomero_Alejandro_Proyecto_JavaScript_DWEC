@@ -7,6 +7,8 @@ let btnCategorias = document.getElementById("btnCategorias");
 let btnCarritoHeader = document.getElementById("btnCarrito");
 let contenido = document.getElementById("contenido");
 let productosContenedor = document.getElementById("productos");
+let btnTabla = document.getElementById("tabla");
+let btnLista = document.getElementById("lista");
 //Comprueba si los usuarios de la api estan en el almacenamiento
 if (!localStorage.getItem("users")) fetch("https://fakestoreapi.com/users").then((res)=>res.text()).then((json)=>{
     localStorage.setItem("users", json);
@@ -19,42 +21,62 @@ fetch("https://fakestoreapi.com/products/categories").then((res)=>res.json()).th
         desplegarCategorias.appendChild(boton);
     });
 });
-fetch("https://fakestoreapi.com/products").then((res)=>res.json()).then((json)=>{
-    generarListaProductos(json);
-});
-function generarListaProductos(productos) {
+generarListaProductos(obtenerProductos());
+async function obtenerProductos() {
+    let respuesta = await fetch("https://fakestoreapi.com/products");
+    let productos = await respuesta.json();
+    return productos;
+}
+async function obternerProductosAscendente() {
+    let respuesta = await fetch("https://fakestoreapi.com/products?sort=asc");
+    let productos = await respuesta.json();
+    console.log(productos);
+    return productos;
+}
+async function obtenerProductosDescendente() {
+    let respuesta = await fetch("https://fakestoreapi.com/products?sort=desc");
+    let productos = await respuesta.json();
+    console.log(productos);
+    return productos;
+}
+async function obtenetProductosCategoria(categoria) {
+    let respuesta = await fetch(`https://fakestoreapi.com/products/category/${categoria}`);
+    let productos = await respuesta.json();
+    console.log(productos);
+    return productos;
+}
+/**
+ * Genera una lista con los productos
+ * @param {*} productos Productos
+ */ async function generarListaProductos(prods) {
+    let productos = await prods;
     let ul = document.createElement("ul");
     productos.forEach((producto)=>{
         let li = document.createElement("li");
         let img = document.createElement("img");
         let pNombre = document.createElement("p");
         let pPrecio = document.createElement("p");
-        let btnCarrito = document.createElement("button");
-        let btnFavorito = document.createElement("button");
-        let btnMeGusta = document.createElement("button");
+        let btnCarrito = crearBtnCarrito(producto);
+        let btnFavorito = crearBtnFavorito(producto);
+        let btnMeGusta = crearBtnMeGusta(producto);
+        let btnNoMeGusta = crearBtnNoMeGusta(producto);
         img.src = producto.image;
         pNombre.textContent = producto.title;
         pNombre.className = "nombreProducto";
         pPrecio.textContent = producto.price;
         pPrecio.className = "precioProducto";
-        btnCarrito.innerHTML = '<i class="bi bi-cart4"></i>';
-        btnCarrito.dataset.id = producto.id;
-        btnCarrito.className = "carritoProducto";
-        comprobarFavoritos(producto.id) ? btnFavorito.innerHTML = '<i class="bi bi-star-fill"></i>' : btnFavorito.innerHTML = '<i class="bi bi-star"></i>';
-        btnFavorito.dataset.id = producto.id;
-        btnFavorito.className = "favoritoProducto";
-        btnMeGusta.innerHTML = '<i class="bi bi-heart"></i> <span>2</span>';
-        btnMeGusta.className = "meGustaProducto";
         agregarHijos([
             img,
             pNombre,
             pPrecio,
             btnCarrito,
             btnFavorito,
-            btnMeGusta
+            btnMeGusta,
+            btnNoMeGusta
         ], li);
         ul.appendChild(li);
     });
+    productosContenedor.innerHTML = "";
     productosContenedor.appendChild(ul);
     let botonesCarrito = document.querySelectorAll(".carritoProducto");
     botonesCarrito.forEach((btnCarrito)=>{
@@ -73,6 +95,215 @@ function generarListaProductos(productos) {
             console.log(e.target);
         });
     });
+    let botonesMeGusta = document.querySelectorAll(".meGustaProducto");
+    botonesMeGusta.forEach((btnMG)=>{
+        btnMG.addEventListener("click", (e)=>{
+            if (!e.target.classList.contains("bi-heart-fill")) {
+                e.target.classList.add("bi-heart-fill");
+                e.target.classList.remove("bi-heart");
+            }
+            console.log(e.target.parentNode);
+            let numeroMeGusta = guardarMeGusta(e.target.parentNode.dataset.id);
+            e.target.parentNode.querySelector("span").innerHTML = numeroMeGusta;
+        });
+    });
+    let botonesNoMeGusta = document.querySelectorAll(".noMeGustaProducto");
+    botonesNoMeGusta.forEach((btnNmG)=>{
+        btnNmG.addEventListener("click", (e)=>{
+            if (!e.target.classList.contains("bi-hand-thumbs-down-fill")) {
+                e.target.classList.add("bi-hand-thumbs-down-fill");
+                e.target.classList.remove("bi-hand-thumbs-down");
+            }
+            console.log(e.target.parentNode);
+            let numeroNoMeGusta = guardarNoMeGusta(e.target.parentNode.dataset.id);
+            e.target.parentNode.querySelector("span").innerHTML = numeroNoMeGusta;
+        });
+    });
+}
+/**
+ * Crear el boton de carrito del producto
+ * @param {*} producto Objeto Producto
+ * @returns Devuelve el boton
+ */ function crearBtnCarrito(producto) {
+    let btn = document.createElement("button");
+    btn.innerHTML = '<i class="bi bi-cart4"></i>';
+    btn.dataset.id = producto.id;
+    btn.className = "carritoProducto";
+    return btn;
+}
+/**
+ * Crea el boton de Favorito
+ * @param {*} producto Objeto Producto
+ * @returns Devuelve el boton
+ */ function crearBtnFavorito(producto) {
+    let btn = document.createElement("button");
+    comprobarFavoritos(producto.id) ? btn.innerHTML = '<i class="bi bi-star-fill"></i>' : btn.innerHTML = '<i class="bi bi-star"></i>';
+    btn.dataset.id = producto.id;
+    btn.className = "favoritoProducto";
+    return btn;
+}
+/**
+ * Crea el boton de Me Gusta
+ * @param {*} producto Objeto Producto
+ * @returns Boton
+ */ function crearBtnMeGusta(producto) {
+    let btn = document.createElement("button");
+    let numMeGusta = obtenerMeGustaPorId(producto.id);
+    if (numMeGusta) btn.innerHTML = `<i class="bi bi-heart"></i> <span>${numMeGusta}</span>`;
+    else btn.innerHTML = `<i class="bi bi-heart"></i> <span>0</span>`;
+    btn.className = "meGustaProducto";
+    btn.dataset.id = producto.id;
+    return btn;
+}
+/**
+ * Crea el boton de No Me Gusta
+ * @param {*} producto Objeto Producto
+ * @returns Boton
+ */ function crearBtnNoMeGusta(producto) {
+    let btn = document.createElement("button");
+    let numNoMeGusta = obtenerNoMeGustaPorId(producto.id);
+    if (numNoMeGusta) btn.innerHTML = `<i class="bi bi-hand-thumbs-down"></i> <span>${numNoMeGusta}</span>`;
+    else btn.innerHTML = `<i class="bi bi-hand-thumbs-down"></i> <span>0</span>`;
+    btn.className = "noMeGustaProducto";
+    btn.dataset.id = producto.id;
+    return btn;
+}
+btnLista.addEventListener("click", (e)=>{
+    generarListaProductos(obtenerProductos());
+    btnLista.classList.add("seleccionado");
+    btnTabla.classList.remove("seleccionado");
+});
+btnTabla.addEventListener("click", (e)=>{
+    crearTablaProductos(obtenerProductos());
+    btnLista.classList.remove("seleccionado");
+    btnTabla.classList.add("seleccionado");
+    console.log(e.target);
+});
+async function crearTablaProductos(prods) {
+    let productos = await prods;
+    let tabla = document.createElement("table");
+    //let thead = crearCabeceraTabla(["Imagen", "Titulo", "Precio", "Opciones"]);
+    let tbody = await crearCuerpoTabla(productos);
+    console.log(tbody);
+    agregarHijos([
+        tbody
+    ], tabla);
+    productosContenedor.innerHTML = "";
+    productosContenedor.appendChild(tabla);
+}
+/**
+ * Crea la cabecera de la tabla
+ * @param {*} param0 Array con el nombre de los campos
+ * @returns Devuelve el thead
+ */ function crearCabeceraTabla([...campos]) {
+    let thead = document.createElement("thead");
+    let tr = document.createElement("tr");
+    campos.forEach((campo)=>{
+        let th = document.createElement("th");
+        th.innerHTML = campo;
+        tr.appendChild(th);
+    });
+    thead.appendChild(tr);
+    return thead;
+}
+/**
+ * Crea el cuerpo de la tabla
+ * @param {*} prods Array Productos
+ * @returns Devuelve el tbody
+ */ async function crearCuerpoTabla(prods) {
+    let tbody = document.createElement("tbody");
+    let productos = await prods;
+    productos.forEach((producto)=>{
+        let tr = document.createElement("tr");
+        let tdImagen = document.createElement("td");
+        let img = document.createElement("img");
+        let tdTitulo = document.createElement("td");
+        let tdPrecio = document.createElement("td");
+        let tdOpciones = document.createElement("td");
+        let btnCarrito = crearBtnCarrito(producto);
+        let btnFavorito = crearBtnFavorito(producto);
+        let btnMeGusta = crearBtnMeGusta(producto);
+        let btnNoMeGusta = crearBtnNoMeGusta(producto);
+        img.src = producto.image;
+        tdImagen.appendChild(img);
+        tdTitulo.innerHTML = producto.title;
+        tdPrecio.innerHTML = producto.price;
+        agregarHijos([
+            btnCarrito,
+            btnFavorito,
+            btnMeGusta,
+            btnNoMeGusta
+        ], tdOpciones);
+        agregarHijos([
+            tdImagen,
+            tdTitulo,
+            tdPrecio,
+            tdOpciones
+        ], tr);
+        tbody.appendChild(tr);
+    });
+    return tbody;
+}
+/**
+ * Guarda el me gusta en el almacenamiento local
+ * @param {*} id Id del producto
+ */ function guardarMeGusta(id) {
+    let objMeGusta = obtenerMeGusta();
+    if (objMeGusta) {
+        if (objMeGusta[id]) objMeGusta[id]++;
+        else objMeGusta[id] = 1;
+    } else {
+        objMeGusta = {};
+        objMeGusta[id] = 1;
+    }
+    localStorage.setItem("meGusta", JSON.stringify(objMeGusta));
+    return objMeGusta[id];
+}
+/**
+ * Obtiene los likes de un producto
+ * @param {*} id Id del producto
+ * @returns Null si no hay o el numero de likes
+ */ function obtenerMeGustaPorId(id) {
+    let objMeGusta = obtenerMeGusta();
+    return objMeGusta?.[id] ?? null;
+}
+/**
+ * Obtener todos los me gusta
+ * @returns
+ */ function obtenerMeGusta() {
+    if (localStorage.getItem("meGusta")) return JSON.parse(localStorage.getItem("meGusta"));
+    return false;
+}
+//No me gusta
+/**
+ * Guarda el me gusta en el almacenamiento local
+ * @param {*} id Id del producto
+ */ function guardarNoMeGusta(id) {
+    let objNoMeGusta = obtenerNoMeGusta();
+    if (objNoMeGusta) {
+        if (objNoMeGusta[id]) objNoMeGusta[id]++;
+        else objNoMeGusta[id] = 1;
+    } else {
+        objNoMeGusta = {};
+        objNoMeGusta[id] = 1;
+    }
+    localStorage.setItem("noMeGusta", JSON.stringify(objNoMeGusta));
+    return objNoMeGusta[id];
+}
+/**
+ * Obtiene los likes de un producto
+ * @param {*} id Id del producto
+ * @returns Null si no hay o el numero de likes
+ */ function obtenerNoMeGustaPorId(id) {
+    let objNoMeGusta = obtenerNoMeGusta();
+    return objNoMeGusta?.[id] ?? null;
+}
+/**
+ * Obtener todos los me gusta
+ * @returns
+ */ function obtenerNoMeGusta() {
+    if (localStorage.getItem("noMeGusta")) return JSON.parse(localStorage.getItem("noMeGusta"));
+    return false;
 }
 /**
  * Agrega un producto a favoritos
@@ -176,12 +407,12 @@ formRegistro.addEventListener("submit", (e)=>{
         agregarUsuario(inputsRegistro);
     }
 });
-//Iniciar Sesion 
+//Iniciar Sesion
 btnIniciarSesion.addEventListener("click", (e)=>{
     document.body.style.height = "100vh"; ////
     ocultarContenido([
         formRegistro,
-        productosContenedor
+        contenido
     ]);
     formIniciarSesion.classList.remove("ocultar");
     formIniciarSesion.classList.add("login");
@@ -195,7 +426,7 @@ formIniciarSesion.addEventListener("submit", (e)=>{
 });
 /**
  * Lo elementos que esten visibles se ocultan
- * @param {*} param0 Elementos 
+ * @param {*} param0 Elementos
  */ function ocultarContenido([...elementos]) {
     elementos.forEach((elemento)=>{
         if (!elemento.classList.contains("ocultar")) elemento.classList.add("ocultar");
@@ -208,7 +439,12 @@ formIniciarSesion.addEventListener("submit", (e)=>{
  */ function iniciarSesion(usr, password) {
     let resultado = comprobarUsuario(usr, password);
     console.log(resultado);
-    resultado ? console.log("Sesion Iniciada") : formIniciarSesion.appendChild(mensajeErrorFormulario("El nombre de usuario o clave no es correcto", formIniciarSesion));
+    if (resultado) {
+        localStorage.setItem("sesion", true);
+        formIniciarSesion.classList.add("ocultar");
+        contenido.classList.remove("ocultar");
+        document.body.style.height = "auto";
+    } else formIniciarSesion.appendChild(mensajeErrorFormulario("El nombre de usuario o clave no es correcto", formIniciarSesion));
 }
 /**
  * Genera un mensaje de error que se pone encima del formulario
