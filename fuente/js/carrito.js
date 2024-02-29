@@ -41,8 +41,15 @@ async function crearCarrito() {
     sectionCarrito.id = 'carrito';
     let h1Carrito = document.createElement('h1');
     let listaCarrito = document.createElement('ul');
+    let btnRealizarPedido = document.createElement('button');
+    if (document.getElementById('carrito')) {
+        contenido.removeChild(document.getElementById('carrito'));
+    }
 
+    let pPrecio = document.createElement('p');
+    let precioTotal = 0;
     let carrito = obtenerCarrito();
+
     for (const key in carrito) {
         let producto = await obtenerProductoPorId(key);
         console.log(producto);
@@ -55,27 +62,97 @@ async function crearCarrito() {
         let btnQuitarUnidades = document.createElement('button');
         let btnEliminarProducto = document.createElement('button');
 
+        precioTotal += producto.price * carrito[key];
 
         img.src = producto.image;
         titulo.innerHTML = producto.title;
         precio.innerHTML = producto.price;
         unidades.innerHTML = carrito[key];
+
+        unidades.className = 'unidadesCarrito';
         btnAgregar.innerHTML = '<i class="bi bi-plus-circle"> </i> <span>Agregar</span>';
         btnQuitarUnidades.innerHTML = '<i class="bi bi-x-circle"></i> <span>Quitar</span>';
         btnEliminarProducto.innerHTML = '<i class="bi bi-trash"></i> <span>Eliminar del Carrito</span>';
 
+        btnAgregar.addEventListener('click', (e) => {
+            if (e.target.tagName == "I") {
+                agregarCarrito(producto.id);
+                actualizarUnidadesCarrito(e.target.parentNode.parentNode.querySelector(".unidadesCarrito"), producto.id);
+
+            }
+
+        });
+
+        btnQuitarUnidades.addEventListener('click', (e) => {
+            if (e.target.tagName == "I") {
+                let unid = eliminarUnidadesCarrito(producto.id);
+                actualizarUnidadesCarrito(e.target.parentNode.parentNode.querySelector(".unidadesCarrito"), producto.id);
+                console.log(unid);
+                if (unid < 1 || unid == undefined) {
+                    crearCarrito();
+                }
+
+            }
+
+        });
+
+        btnEliminarProducto.addEventListener('click', (e) => {
+            if (e.target.tagName == "I") {
+                eliminarProductoCarrito(producto.id);
+                crearCarrito();
+
+            }
+        });
 
         agregarHijos([img, titulo, precio, unidades, btnAgregar, btnQuitarUnidades, btnEliminarProducto], li);
         listaCarrito.appendChild(li);
 
     }
 
+    btnRealizarPedido.innerHTML = "Realizar Pedido";
+    pPrecio.innerHTML = "Precio Total: " + precioTotal;
 
     h1Carrito.textContent = "Carrito";
-    agregarHijos([h1Carrito, listaCarrito], sectionCarrito);
+    agregarHijos([h1Carrito, listaCarrito, pPrecio, btnRealizarPedido], sectionCarrito);
     contenido.appendChild(sectionCarrito);
 }
 
+function actualizarUnidadesCarrito(elemento, id) {
+    console.log(obtenerUnidadesProductoCarrito(id));
+
+    elemento.innerHTML = obtenerUnidadesProductoCarrito(id);
+}
+
+function eliminarUnidadesCarrito(id) {
+    let carrito = obtenerCarrito();
+    if ((carrito[id] - 1) < 1) {
+        delete carrito[id];
+
+    } else {
+        carrito[id]--;
+    }
+
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    return carrito[id];
+}
+
+function eliminarProductoCarrito(id) {
+    let carrito = obtenerCarrito();
+    delete carrito[id];
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+
+}
+
+/**
+ * Obtiene las unidades que hay de un producto en el carrito
+ * @param {*} id Id del producto
+ * @returns Numero de unidades
+ */
+function obtenerUnidadesProductoCarrito(id) {
+    let carrito = obtenerCarrito();
+    return carrito[id];
+}
 
 /**
  * Agrega un producto al carrito
@@ -83,32 +160,32 @@ async function crearCarrito() {
  */
 function agregarCarrito(id) {
     if (obtenerCarrito()) {
-      let carrito = obtenerCarrito();
-      let unidades = 1;
-  
-      if (carrito[id]) {
-        unidades = carrito[id] + 1;
-      }
-      carrito[id] = unidades;
-      localStorage.setItem("carrito", JSON.stringify(carrito));
+        let carrito = obtenerCarrito();
+        let unidades = 1;
+
+        if (carrito[id]) {
+            unidades = carrito[id] + 1;
+        }
+        carrito[id] = unidades;
+        localStorage.setItem("carrito", JSON.stringify(carrito));
     } else {
-      let objCarrito = {};
-      objCarrito[id] = 1;
-      localStorage.setItem("carrito", JSON.stringify(objCarrito));
+        let objCarrito = {};
+        objCarrito[id] = 1;
+        localStorage.setItem("carrito", JSON.stringify(objCarrito));
     }
-  }
-  
-  /**
-   * Obtiene el carrito
-   * @returns Objeto Carrito
-   */
-  function obtenerCarrito() {
+}
+
+/**
+ * Obtiene el carrito
+ * @returns Objeto Carrito
+ */
+function obtenerCarrito() {
     if (localStorage.getItem("carrito")) {
-      return JSON.parse(localStorage.getItem("carrito"));
+        return JSON.parse(localStorage.getItem("carrito"));
     } else {
-      return false;
+        return false;
     }
-  }
-  
+}
+
 
 
