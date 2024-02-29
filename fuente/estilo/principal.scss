@@ -1,3 +1,5 @@
+@import "carrito";
+
 body {
   margin: 0;
   margin-top: 0;
@@ -41,7 +43,7 @@ header nav ul {
 
 #contenido {
   margin-top: 60px;
-  display: flex;
+
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -200,85 +202,90 @@ main {
   }
 }
 
+
+
+
+
 #productos {
   width: 100%;
   overflow: hidden;
   overflow-y: visible;
+
   table {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    thead{
-        width: 90%;
-        tr{
-            
-            width: 100%;
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
 
-
-            th:nth-child(1){
-                width: 15%;
-            }
-    
-            th:nth-child(2){
-                width: 40%;
-            }
-    
-            th:nth-child(3){
-                width: 5%;
-            }
-            th:nth-child(4){
-                width: 40%;
-                
-            }
-        }
-
-
-
+    thead,
+    tbody {
+      width: 100%;
     }
 
-    tbody {
-        width: 90%;
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+      text-align: center;
+      border: solid 1px rgba(128, 128, 128, 0.274);
+    }
+
+    thead {
       tr {
-        width: 100%;
-        
-
-        img {
-          max-height: 140px;
-          width: 120px;
+        th:nth-child(1) {
+          width: 15%;
         }
 
-        td{
-
-            
-            button{
-                background-color: transparent;
-                border: none;
-            }
+        th:nth-child(2) {
+          width: 40%;
         }
 
-        td:nth-child(1){
-            width: 15%;
+        th:nth-child(3) {
+          width: 5%;
         }
 
-        td:nth-child(2){
-            width: 40%;
-        }
-
-        td:nth-child(3){
-            width: 5%;
-        }
-        td:nth-child(4){
-            height: 100%;
-            width: 100%;
-            
-            
+        th:nth-child(4) {
+          width: 40%;
         }
       }
     }
 
-    
+    tbody {
+      tr {
+        img {
+          max-height: 140px;
+          width: auto;
+          /* Ajustado para mantener la proporción de las imágenes */
+        }
+
+
+        button {
+          background-color: transparent;
+          border: none;
+
+        }
+      }
+
+
+      td:nth-child(4) {
+        div {
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+
+          button {
+            height: 60px;
+            width: 60px;
+
+            i{
+              padding: 18px;
+              cursor: pointer;
+            }
+          }
+        }
+
+      }
+    }
   }
 
   ul {
@@ -298,6 +305,7 @@ main {
       margin-bottom: 15px;
       min-height: 100px;
       z-index: 0;
+
       img {
         max-height: 140px;
         width: 120px;
@@ -336,73 +344,7 @@ main {
         width: 30%;
       }
 
-      .meGustaProducto {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 22px;
-
-        i {
-          margin-top: -13px;
-          padding: 10px;
-          //font-size: 25px;
-          z-index: 2;
-        }
-        span {
-          position: absolute;
-          font-size: 14px;
-          padding: 0;
-          margin-top: 20px;
-          z-index: 1;
-        }
-      }
-
-      .noMeGustaProducto {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 22px;
-
-        i {
-          margin-top: -18px;
-          padding: 10px;
-          //font-size: 25px;
-          z-index: 2;
-        }
-        span {
-          position: absolute;
-          font-size: 14px;
-          padding: 0;
-          margin-top: 20px;
-          z-index: 1;
-        }
-      }
-
-      .carritoProducto:hover {
-        border-radius: 50%;
-        background-color: #8adaff;
-        box-shadow: 0px 0px 10px 2px #026d9e67;
-      }
-
-      .favoritoProducto:hover {
-        border-radius: 50%;
-        background-color: #ffd814ad;
-        box-shadow: 0px 0px 10px 2px rgba(238, 255, 0, 0.445);
-      }
-
-      .meGustaProducto:hover {
-        border-radius: 50%;
-        background-color: #e71d509d;
-        box-shadow: 0px 0px 10px 2px #e7587c9d;
-      }
-
-      .noMeGustaProducto:hover {
-        border-radius: 50%;
-        background-color: #aea6a89d;
-        box-shadow: 0px 0px 10px 2px #9e98999d;
-      }
+      
     }
 
     li:hover {
@@ -412,7 +354,78 @@ main {
       border-radius: 15px;
     }
   }
+
+  .meGustaProducto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+
+    i {
+      margin-top: -13px;
+      padding: 10px;
+      //font-size: 25px;
+      z-index: 2;
+    }
+
+    span {
+      position: absolute;
+      font-size: 14px;
+      padding: 0;
+      margin-top: 20px;
+      z-index: 1;
+    }
+  }
+
+  .noMeGustaProducto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+
+    i {
+      margin-top: -18px;
+      padding: 10px;
+      //font-size: 25px;
+      z-index: 2;
+    }
+
+    span {
+      position: absolute;
+      font-size: 14px;
+      padding: 0;
+      margin-top: 20px;
+      z-index: 1;
+    }
+  }
+
+  .carritoProducto:hover {
+    border-radius: 50%;
+    background-color: #8adaff;
+    box-shadow: 0px 0px 10px 2px #026d9e67;
+  }
+
+  .favoritoProducto:hover {
+    border-radius: 50%;
+    background-color: #ffd814ad;
+    box-shadow: 0px 0px 10px 2px rgba(238, 255, 0, 0.445);
+  }
+
+  .meGustaProducto:hover {
+    border-radius: 50%;
+    background-color: #e71d509d;
+    box-shadow: 0px 0px 10px 2px #e7587c9d;
+  }
+
+  .noMeGustaProducto:hover {
+    border-radius: 50%;
+    background-color: #aea6a89d;
+    box-shadow: 0px 0px 10px 2px #9e98999d;
+  }
 }
+
 
 .agregarCarrito {
   transition: cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -429,7 +442,7 @@ main {
 }
 
 #filtros {
-  display: flex;
+  
   width: 90%;
   justify-content: space-between;
 
@@ -477,4 +490,9 @@ main {
 
 .borde-radius-right {
   border-radius: 0px 12px 12px 0px;
+}
+
+
+.display-flex {
+  display: flex;
 }
