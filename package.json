@@ -5,7 +5,7 @@
   "description": "",
   "scripts": {
     "parcel:desarrollo": "parcel fuente/index.html --dist-dir desarrollo",
-    "parcel:produccion": "parcel build fuente/index.html --public-url ./ --dist-dir produccion --no-optimize",
+    "parcel:produccion": "parcel build fuente/index.html --public-url ./ --dist-dir produccion",
     "limpieza": "rimraf desarrollo produccion parcel->cache",
     "des": "npm run parcel:desarrollo",
     "prod": "npm-run-all limpieza parcel:produccion",

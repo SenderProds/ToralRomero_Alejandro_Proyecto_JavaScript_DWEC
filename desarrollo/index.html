@@ -17,14 +17,16 @@
     <script src="/index.0c6c9fff.js" defer=""></script>
     <script src="/index.5a2819ae.js" defer=""></script>
     <script src="/index.6479a7c3.js" defer=""></script>
+    <script src="/index.b73b65ba.js" defer=""></script>
 </head>
 
 <body>
     <header>
         <nav>
             <ul id="menu">
+                <li class="ocultar"><button id="btnPrincipal"><i class="bi bi-house"></i> Principal</button></li>
                 <li><button id="btnIniciarSesion"><i class="bi bi-box-arrow-in-right"></i> Iniciar Sesion</button></li>
-                <li><button id="btnRegistro">Registrarse</button></li>
+                <li><button id="btnRegistro"><i class="bi bi-person"></i> Registrarse</button></li>
                 <li id="btnCategorias">
                     <button>Categorias <i class="bi bi-caret-down"></i></button>
                     <div id="desplegar" class="ocultar">
@@ -33,10 +35,10 @@
                     </div>
                     
                 </li>
-                <li><button><i class="bi bi-person-lines-fill"></i> Contacto</button></li>
+                <li><button id="btnContacto"><i class="bi bi-person-lines-fill"></i> Contacto</button></li>
                 <li><button id="btnCarrito"><i class="bi bi-cart4"></i> Carrito</button></li>
                 <li><button><i class="bi bi-map"></i> Mapa</button></li>
-
+                <li class="ocultar"><button id="btnCerrarSesion"><i class="bi bi-box-arrow-right"></i> Cerrar Sesion</button></li>
 
 
             </ul>
@@ -69,6 +71,8 @@
             <label for="telefono">Telefono</label>
             <input type="number" name="telefono" id="telefono" required="">
 
+            <label for="correo">Correo Electronico</label>
+            <input type="email" name="correo" id="correo" required="">
 
 
 
@@ -84,11 +88,25 @@
             <input type="text" name="username" id="usernameReg" required="">
 
             <label for="password">Clave</label>
-            <input type="text" name="password" id="passwordReg" required="">
+            <input type="password" name="password" id="passwordReg" required="">
 
+            
             <input type="submit" value="Registrarse" required="">
 
 
+        </form>
+
+        <form id="contacto" class="ocultar">
+            <label for="nombre">Nombre</label>
+            <input type="text" required="">
+
+            <label for="correo">Correo Electronico</label>
+            <input type="email" required="">
+
+            <label for="mensaje">Mensaje</label>
+            <input type="text" name="mensaje">
+
+            <input type="submit" value="Enviar">
         </form>
 
 

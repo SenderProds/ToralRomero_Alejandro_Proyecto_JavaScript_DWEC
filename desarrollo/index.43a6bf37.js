@@ -1,9 +1,14 @@
 let btnIniciarSesion = document.getElementById("btnIniciarSesion");
-let formIniciarSesion = document.getElementById("inicioSesion");
+let btnCarritoHeader = document.getElementById("btnCarrito");
+let btnPrincipal = document.getElementById("btnPrincipal");
+let btnCerrarSesion = document.getElementById("btnCerrarSesion");
 let btnRegistro = document.getElementById("btnRegistro");
-let formRegistro = document.getElementById("registro");
-let desplegarCategorias = document.getElementById("desplegar");
 let btnCategorias = document.getElementById("btnCategorias");
+let btnContacto = document.getElementById("btnContacto");
+let formIniciarSesion = document.getElementById("inicioSesion");
+let formRegistro = document.getElementById("registro");
+let formContacto = document.getElementById("contacto");
+let desplegarCategorias = document.getElementById("desplegar");
 let contenido = document.getElementById("contenido");
 let productosContenedor = document.getElementById("productos");
 let productosFiltros = document.getElementById("filtros");
@@ -11,7 +16,6 @@ let btnTabla = document.getElementById("tabla");
 let btnLista = document.getElementById("lista");
 let btnAscendente = document.getElementById("ascendente");
 let btnDescendente = document.getElementById("descendente");
-let btnCarritoHeader = document.getElementById("btnCarrito");
 //Comprueba si los usuarios de la api estan en el almacenamiento
 if (!localStorage.getItem("users")) fetch("https://fakestoreapi.com/users").then((res)=>res.text()).then((json)=>{
     localStorage.setItem("users", json);
@@ -24,9 +28,18 @@ fetch("https://fakestoreapi.com/products/categories").then((res)=>res.json()).th
         boton.innerHTML = categoria;
         desplegarCategorias.appendChild(boton);
         boton.addEventListener("click", (e)=>{
-            generarListaProductos(obtenetProductosCategoria(categoria));
+            resetearContenido();
+            document.body.style.height = "100%";
+            productosContenedor.dataset.categoria = categoria;
+            cargarProductos();
         });
     });
+});
+btnPrincipal.addEventListener("click", (e)=>{
+    productosContenedor.dataset.categoria = "";
+    document.body.style.height = "100%";
+    resetearContenido();
+    cargarProductos();
 });
 function eventoBtnNoMeGusta() {
     let botonesNoMeGusta = document.querySelectorAll(".noMeGustaProducto");

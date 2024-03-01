@@ -29,3 +29,38 @@ function mensajeErrorFormulario(msj, formulario) {
         return divIncorrecto;
     }
 }
+
+
+
+function resetearContenido(){
+
+    if(!productosContenedor.classList.contains('ocultar')){
+        productosContenedor.classList.add('ocultar');
+    }
+
+    if(contenido.classList.contains('ocultar')){
+        contenido.classList.remove('ocultar');
+        contenido.classList.add('display-flex');
+    }
+
+    if(!productosFiltros.classList.contains('ocultar')){
+        productosFiltros.classList.add('ocultar');
+        productosFiltros.classList.remove('display-flex');
+    }
+
+    if(document.getElementById('carrito')){
+        contenido.removeChild(document.getElementById('carrito'));
+    }
+
+    if(!document.getElementById('inicioSesion').classList.contains('ocultar')){
+        document.getElementById('inicioSesion').classList.add('ocultar');
+    }
+
+    if(!document.getElementById('registro').classList.contains('ocultar')){
+        document.getElementById('registro').classList.add('ocultar');
+    }
+
+    if(!document.getElementById('contacto').classList.contains('ocultar')){
+        document.getElementById('contacto').classList.add('ocultar');
+    }
+}
