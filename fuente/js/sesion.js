@@ -2,6 +2,10 @@
 
 recargarSesion();
 
+
+/**
+ * Recarga la sesion comprobando si el usuario esta logeado
+ */
 function recargarSesion() {
   let liBtnIniciarSesion =
     document.getElementById("btnIniciarSesion").parentElement;
@@ -42,12 +46,14 @@ formRegistro.addEventListener("keydown", (e) => {
     e.target.previousElementSibling.previousElementSibling != null
   ) {
     e.preventDefault();
-    formRegistro.appendChild(
-      mensajeErrorFormulario(
-        "Los campos anteriores tienen que ser validos",
-        formRegistro
-      )
+    let mensajeError = mensajeErrorFormulario(
+      "Los campos anteriores tienen que ser validos",
+      formRegistro
     );
+    formRegistro.appendChild(mensajeError);
+    setTimeout(() => {
+      formRegistro.removeChild(mensajeError);
+    }, 3000);
   }
 
   

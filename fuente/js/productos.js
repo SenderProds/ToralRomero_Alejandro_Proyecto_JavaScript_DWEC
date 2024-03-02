@@ -84,6 +84,10 @@ function eventoProducto() {
   }
 }
 
+/**
+ * Crea la vista en detalle del producto
+ * @param {*} id Id del producto
+ */
 async function detalleProducto(id) {
   let producto = await obtenerProductoPorId(id);
   if (document.getElementById("detalle")) {
@@ -222,6 +226,9 @@ function cargarProductos() {
   generarProductosInfinitos();
 }
 
+/**
+ * Crea productos infinitos duplicando los elementos
+ */
 function generarProductosInfinitos() {
   window.addEventListener("scroll", (e) => {
     if (!productosContenedor.classList.contains("ocultar")) {
@@ -274,6 +281,10 @@ function generarProductosInfinitos() {
   });
 }
 
+/**
+ * Crea la tabla de productos
+ * @param {*} prods Array Productos
+ */
 async function crearTablaProductos(prods) {
   let productos = await prods;
 

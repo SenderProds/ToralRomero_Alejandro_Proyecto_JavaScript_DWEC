@@ -26,12 +26,20 @@ function mensajeErrorFormulario(msj, formulario) {
 
         divIncorrecto.textContent += msj;
         divIncorrecto.classList.add("incorrecto");
+
+        setTimeout(() => {
+            divIncorrecto.classList.remove("incorrecto");
+            divIncorrecto.classList.add("ocultar");
+
+        },3000);
         return divIncorrecto;
     }
 }
 
 
-
+/**
+ * Resetea el contenido
+ */
 function resetearContenido(){
 
     if(!productosContenedor.classList.contains('ocultar')){
@@ -62,5 +70,9 @@ function resetearContenido(){
 
     if(!document.getElementById('contacto').classList.contains('ocultar')){
         document.getElementById('contacto').classList.add('ocultar');
+    }
+
+    if(!document.getElementById('map').classList.contains('ocultar')){
+        document.getElementById('map').classList.add('ocultar')
     }
 }

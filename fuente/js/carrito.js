@@ -15,6 +15,10 @@ btnCarritoHeader.addEventListener("click", (e) => {
   }
 });
 
+
+/**
+ * Crea el evento de los botones de carrito
+ */
 function eventoBtnCarrito() {
   let botonesCarrito = document.querySelectorAll(".carritoProducto");
 
@@ -28,6 +32,9 @@ function eventoBtnCarrito() {
   });
 }
 
+/**
+ * Crea la vista del carrito
+ */
 async function crearCarrito() {
   let sectionCarrito = document.createElement("section");
   sectionCarrito.id = "carrito";
@@ -131,7 +138,9 @@ async function crearCarrito() {
 }
 
 
-
+/**
+ * Actualiza el precio total del carrito al quitar o agregar unidades
+ */
 async function actualizarPrecioTotalCarrito(){
     let contenedorPrecioTotal = document.getElementById('precioTotal');
     let carrito = obtenerCarrito();
@@ -148,12 +157,22 @@ async function actualizarPrecioTotalCarrito(){
     contenedorPrecioTotal.innerHTML = precioTotal;
 }
 
+/**
+ * Actualiza las unidades de los productos del carrito
+ * @param {*} elemento Elemento que muestra las unidades
+ * @param {*} id 
+ */
 function actualizarUnidadesCarrito(elemento, id) {
   console.log(obtenerUnidadesProductoCarrito(id));
 
   elemento.innerHTML = obtenerUnidadesProductoCarrito(id);
 }
 
+/**
+ * Elimina unidades del carrito
+ * @param {*} id Id del producto
+ * @returns Devuelve las unidades
+ */
 function eliminarUnidadesCarrito(id) {
   let carrito = obtenerCarrito();
   if (carrito[id] - 1 < 1) {
@@ -166,6 +185,10 @@ function eliminarUnidadesCarrito(id) {
   return carrito[id];
 }
 
+/**
+ * Elimina un producto del carrito
+ * @param {*} id Id del producto
+ */
 function eliminarProductoCarrito(id) {
   let carrito = obtenerCarrito();
   delete carrito[id];

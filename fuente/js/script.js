@@ -5,6 +5,7 @@ let btnCerrarSesion = document.getElementById("btnCerrarSesion");
 let btnRegistro = document.getElementById("btnRegistro");
 let btnCategorias = document.getElementById("btnCategorias");
 let btnContacto = document.getElementById("btnContacto");
+let btnMapa = document.getElementById("btnMapa");
 
 
 let formIniciarSesion = document.getElementById("inicioSesion");
@@ -64,7 +65,9 @@ btnPrincipal.addEventListener('click', (e) => {
 });
 
 
-
+/**
+ * Crea el Evento de los Botones de No Me Gusta
+ */
 function eventoBtnNoMeGusta() {
   let botonesNoMeGusta = document.querySelectorAll(".noMeGustaProducto");
   botonesNoMeGusta.forEach((btnNmG) => {
@@ -84,7 +87,9 @@ function eventoBtnNoMeGusta() {
 }
 
 
-
+/**
+ * Crea el evento de los botones de Favorito
+ */
 function eventoBtnFavorito() {
   let botonesFavorito = document.querySelectorAll(".favoritoProducto");
 
@@ -101,6 +106,9 @@ function eventoBtnFavorito() {
 }
 
 
+/**
+ * Crea el evento de los botones de Me Gusta
+ */
 function eventoBtnMeGusta() {
   let botonesMeGusta = document.querySelectorAll(".meGustaProducto");
   botonesMeGusta.forEach((btnMG) => {
@@ -373,7 +381,6 @@ function comprobarFavoritos(id) {
     return false;
   }
 }
-//Carrito
 
 
 

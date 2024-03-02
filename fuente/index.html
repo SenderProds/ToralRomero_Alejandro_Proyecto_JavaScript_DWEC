@@ -20,6 +20,20 @@
     <script src="js/productos.js" defer></script>
     <script src="js/sesion.js" defer></script>
     <script src="js/contacto.js" defer></script>
+    <script src="js/mapa.js" defer></script>
+
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
 </head>
 
 <body>
@@ -39,7 +53,7 @@
                 </li>
                 <li><button id="btnContacto"><i class="bi bi-person-lines-fill"></i> Contacto</button></li>
                 <li><button id="btnCarrito"><i class="bi bi-cart4"></i> Carrito</button></li>
-                <li><button><i class="bi bi-map"></i> Mapa</button></li>
+                <li><button id="btnMapa"><i class="bi bi-map"></i> Mapa</button></li>
                 <li class="ocultar"><button id="btnCerrarSesion" ><i class="bi bi-box-arrow-right"></i> Cerrar Sesion</button></li>
 
 
@@ -127,6 +141,11 @@
             </nav>
 
             <section id="productos">
+
+
+            </section>
+
+            <section id="map">
 
 
             </section>
