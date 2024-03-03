@@ -107,9 +107,11 @@ async function detalleProducto(id) {
   pDescripcion.innerHTML = producto.description;
   pPrecio.innerHTML = producto.price;
   btnCarrito.innerHTML = "Agregar a Carrito";
+  btnCarrito.classList.add('btnCarrito');
 
   btnCarrito.addEventListener("click", (e) => {
     agregarCarrito(producto.id);
+    btnCarritoHeader.classList.add("agregarCarrito");
   });
   agregarHijos(
     [h1Producto, img, pDescripcion, pPrecio, btnCarrito],

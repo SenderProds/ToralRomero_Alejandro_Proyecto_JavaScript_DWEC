@@ -85,26 +85,26 @@
 
 
             <label for="telefono">Telefono</label>
-            <input type="number" name="telefono" id="telefono" required>
+            <input type="number" name="telefono" id="telefono" pattern="[0-9]{10}" required>
 
             <label for="correo">Correo Electronico</label>
-            <input type="email" name="correo" id="correo" required>
+            <input type="email" name="correo" id="correo"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
 
 
 
             <label for="dni">DNI</label>
-            <input type="text" name="dni" id="dni" required>
+            <input type="text" name="dni" id="dni" pattern="[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke]" required>
 
 
 
             <label for="edad">Edad</label>
-            <input type="edad" name="edad" id="edad" required>
+            <input type="edad" name="edad" id="edad" min="1" required>
 
             <label for="username">Nombre de usuario</label>
-            <input type="text" name="username" id="usernameReg" required>
+            <input type="text" name="username" id="usernameReg" minlength="4" required>
 
             <label for="password">Clave</label>
-            <input type="password" name="password" id="passwordReg" required>
+            <input type="password" name="password" id="passwordReg" minlength="4" required>
 
             
             <input type="submit" value="Registrarse" required>
@@ -145,7 +145,7 @@
 
             </section>
 
-            <section id="map">
+            <section id="map" class="ocultar">
 
 
             </section>
