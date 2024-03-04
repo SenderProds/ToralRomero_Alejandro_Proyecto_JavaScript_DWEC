@@ -154,7 +154,7 @@ async function actualizarPrecioTotalCarrito(){
     }
     
 
-    contenedorPrecioTotal.innerHTML = precioTotal;
+    contenedorPrecioTotal.innerHTML = precioTotal.toFixed(2);
 }
 
 /**
